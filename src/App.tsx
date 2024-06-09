@@ -34,25 +34,45 @@ function App() {
   };
 
   return (
-    <main>
-      <h1>Saul&apos;s ToDo-List</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Write a ToDo!"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <button>Submit</button>
-      </form>
-      <h2>My ToDos</h2>
-      <ul className="list-inside list-disc">
-        {todos.map((todo) => (
-          <li key={todo.id} onClick={deleteTodo.bind(null, todo.id)}>
-            {todo.title}
-          </li>
-        ))}
-      </ul>
+    <main className="flex flex-col gap-2 w-full min-h-screen p-2 bg-[#7145d6]">
+      <header className="w-full">
+        <h1 className="font-bold text-2xl text-center">
+          Saúl&apos;s ToDo-List
+        </h1>
+      </header>
+      <div className="flex flex-col flex-grow w-full h-full rounded-xl bg-violet-400 text-black">
+        <div className="flex w-full gap-2 items-center p-2">
+          <h2 className="text-lg font-semibold">My ToDos</h2>
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-center flex-grow gap-2"
+          >
+            <input
+              type="text"
+              placeholder="Write a ToDo!"
+              value={inputValue}
+              onChange={handleInputChange}
+              className="bg-violet-300 rounded-md text-black placeholder-violet-700/50 p-2 flex-grow"
+            />
+            <button className="p-2 bg-[#7145d6] text-white rounded-md hover:bg-violet-700 transition-colors duration-300">
+              Submit
+            </button>
+          </form>
+        </div>
+        <div className="flex w-full h-full flex-grow flex-col rounded-xl p-2 bg-violet-200">
+          <ul className="flex flex-col gap-2">
+            {todos.map((todo) => (
+              <li
+                key={todo.id}
+                onClick={deleteTodo.bind(null, todo.id)}
+                className="w-full p-2 rounded-md bg-violet-400"
+              >
+                {todo.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </main>
   );
 }
