@@ -14,7 +14,10 @@ function App() {
     event.preventDefault();
 
     setTodos((prevTodos) => {
-      return [...prevTodos, { id: prevTodos.length + 1, title: inputValue }];
+      return [
+        ...prevTodos,
+        { id: Math.random() * 1000 + prevTodos.length + 1, title: inputValue },
+      ];
     });
 
     setInputValue("");
