@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import { Header } from "./components/header/header";
 import { TodoForm } from "./components/todos/todo-form";
+import { Todo, TodoItem } from "./components/todos/todo-item";
 import { TodoList } from "./components/todos/todo-list";
 
-const DUMMY_TODOS = [
+const DUMMY_TODOS: Array<Todo> = [
   { id: 1, title: "Attend the React course", completed: true },
   { id: 2, title: "Build a ToDo-List", completed: false },
   { id: 3, title: "???", completed: false },
@@ -59,11 +60,16 @@ function App() {
           <h2 className="text-lg font-semibold">My ToDos</h2>
           <TodoForm onFormSubmit={handleSubmit} />
         </div>
-        <TodoList
-          todos={todos}
-          onCheckedChange={handleCheckedChange}
-          onDeleteTodo={deleteTodo}
-        />
+        <TodoList>
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onChecked={handleCheckedChange}
+              onDeleteTodo={deleteTodo}
+            />
+          ))}
+        </TodoList>
       </div>
     </main>
   );

@@ -1,29 +1,13 @@
-import { FC } from "react";
-import { TodoItem } from "./todo-item";
+import { FC, ReactNode } from "react";
 
 interface Props {
-  todos: { id: number; title: string; completed: boolean }[];
-  onCheckedChange: (todoId: number) => void;
-  onDeleteTodo: (todoId: number) => void;
+  children: ReactNode;
 }
 
-export const TodoList: FC<Props> = ({
-  todos,
-  onCheckedChange,
-  onDeleteTodo,
-}) => {
+export const TodoList: FC<Props> = ({ children }) => {
   return (
     <div className="flex w-full h-full flex-grow flex-col rounded-xl p-2 bg-violet-200">
-      <ul className="flex flex-col gap-2">
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onChecked={onCheckedChange}
-            onDeleteTodo={onDeleteTodo}
-          />
-        ))}
-      </ul>
+      <ul className="flex flex-col gap-2">{children}</ul>
     </div>
   );
 };

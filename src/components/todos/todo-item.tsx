@@ -1,7 +1,13 @@
 import { FC } from "react";
 
+export interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 interface Props {
-  todo: { id: number; title: string; completed: boolean };
+  todo: Todo;
   onChecked: (todoId: number) => void;
   onDeleteTodo: (todoId: number) => void;
 }
