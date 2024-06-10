@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Header } from "./components/header/header";
 import { TodoForm } from "./components/todos/todo-form";
 import { Todo, TodoItem } from "./components/todos/todo-item";
 import { TodoList } from "./components/todos/todo-list";
 
-const DUMMY_TODOS: Array<Todo> = [
-  { id: 1, title: "Attend the React course", completed: true },
-  { id: 2, title: "Build a ToDo-List", completed: false },
-  { id: 3, title: "???", completed: false },
-];
+// const DUMMY_TODOS: Array<Todo> = [
+//   { id: 1, title: "Attend the React course", completed: true },
+//   { id: 2, title: "Build a ToDo-List", completed: false },
+//   { id: 3, title: "???", completed: false },
+// ];
 
 function App() {
-  const [todos, setTodos] = useState(DUMMY_TODOS);
+  const [todos, setTodos] = useState<Array<Todo>>([]);
 
-  const handleSubmit = (todoTitle: string) => {
+  const fetchTodos = async () => {
+    const response = await fetch("http://localhost:3000/todos");
+    const data = await response.json();
+
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const handleSubmit = async (todoTitle: string) => {
     if (!todoTitle.trim()) {
       return;
     }
@@ -29,6 +40,18 @@ function App() {
         },
       ];
     });
+
+    await fetch("http://localhost:3000/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: todoTitle,
+      }),
+    });
+
+    fetchTodos();
   };
 
   const handleCheckedChange = (todoId: number) => {
