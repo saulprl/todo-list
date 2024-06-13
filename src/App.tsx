@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const DUMMY_TODOS = [
   {
@@ -19,9 +19,9 @@ function App() {
   const [todos, setTodos] = useState(DUMMY_TODOS);
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     setTodos((prevTodos) => {
       const newTodo = {
         id: Math.floor(Math.random() * 1000) + todos.length,
@@ -34,8 +34,14 @@ function App() {
     setInputValue("");
   };
 
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleDelete = (deletedId: number) => {
+    setTodos((previousTodos) => {
+      return previousTodos.filter((todo) => todo.id !== deletedId);
+    });
   };
 
   return (
@@ -48,7 +54,20 @@ function App() {
       <h2>My ToDos</h2>
       <ul className="list-inside list-disc">
         {todos.map((todo) => {
-          return <li key={todo.id}>{todo.title}</li>;
+          return (
+            <li key={todo.id}>
+              <span>{todo.title}</span>
+              <button
+                className="bg-[#e91e63]"
+                onClick={() => {
+                  // logic here
+                  handleDelete(todo.id);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          );
         })}
       </ul>
     </main>
