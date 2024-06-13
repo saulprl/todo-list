@@ -45,31 +45,45 @@ function App() {
   };
 
   return (
-    <main>
-      <h1>ToDo List</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button>Submit</button>
-      </form>
-      <h2>My ToDos</h2>
-      <ul className="list-inside list-disc">
-        {todos.map((todo) => {
-          return (
-            <li key={todo.id}>
-              <span>{todo.title}</span>
-              <button
-                className="bg-[#e91e63]"
-                onClick={() => {
-                  // logic here
-                  handleDelete(todo.id);
-                }}
-              >
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+    <main className="flex w-full h-screen max-h-screen bg-[#7145d6] flex-col p-2 gap-2">
+      <h1 className="text-2xl font-semibold text-center">ToDo List</h1>
+      <div className="rounded-md bg-violet-400">
+        <div className="flex w-full items-center gap-4 p-2">
+          <h2 className="text-xl font-medium whitespace-nowrap">My ToDos</h2>
+          <form
+            onSubmit={handleSubmit}
+            className="flex w-full items-center gap-2 "
+          >
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              className="flex-grow"
+            />
+            <button>Submit</button>
+          </form>
+        </div>
+        <div className="p-2 bg-violet-300 flex-grow h-full rounded-md">
+          <ul className="list-inside list-disc">
+            {todos.map((todo) => {
+              return (
+                <li key={todo.id}>
+                  <span>{todo.title}</span>
+                  <button
+                    className="bg-[#e91e63]"
+                    onClick={() => {
+                      // logic here
+                      handleDelete(todo.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </main>
   );
 }
