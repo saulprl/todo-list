@@ -11,23 +11,21 @@ function App() {
   const [todos, setTodos] = useState<Array<Todo>>([]);
   const [inputValue, setInputValue] = useState("");
 
+  const fetchTodos = async () => {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+
+    if (!response.ok) {
+      console.error("Failed to fetch todos");
+    }
+
+    const data = (await response.json()) as Todo[];
+    const slicedTodos = data.slice(0, 20);
+
+    setTodos(slicedTodos);
+    console.log("fetched todos");
+  };
+
   useEffect(() => {
-    const fetchTodos = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos"
-      );
-
-      if (!response.ok) {
-        console.error("Failed to fetch todos");
-      }
-
-      const data = (await response.json()) as Todo[];
-      const slicedTodos = data.slice(0, 20);
-
-      setTodos(slicedTodos);
-      console.log("fetched todos");
-    };
-
     fetchTodos();
   }, []);
 
